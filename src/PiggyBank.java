@@ -6,7 +6,7 @@ David Tarandach Tabatschnic
 import java.util.Random;
 import java.util.Scanner;
 
-public class PiggyBank {
+public abstract class PiggyBank {
     //Instance variables
     private int cost;
     private int sellCost;
@@ -23,7 +23,6 @@ public class PiggyBank {
 
     //Class variables
     public static double[] coinValues = {0.05, 0.10, 0.25, 1, 2};
-    public static double bankBalance = 3500;
 
     //Constructors
     public PiggyBank() {
@@ -67,14 +66,12 @@ public class PiggyBank {
             }
         }
 
-        tag = _tag;
         name = tag + " Piggy Bank";
         money = 0;
         coins = new int[5];
         amountOfCoins = 0;
         sellCost = (int) (0.8 * cost);
         capacity = (int) (volume / 0.08);
-        bankBalance -= cost;
     }
 
     public PiggyBank(String _name, int _volume, boolean _canGainInterest, boolean _canWithdraw, boolean _canInvest) {
@@ -93,7 +90,6 @@ public class PiggyBank {
         if (canWithdraw) {cost += 10;}
         if (canInvest) {cost += 10;}
         sellCost = (int)(0.8*cost);
-        bankBalance -= cost;
     }
 
     // Getters and setters
@@ -159,10 +155,6 @@ public class PiggyBank {
         return capacity - amountOfCoins;
     }
 
-    public static double getBalance() {
-        return bankBalance;
-    }
-
     //pre: takes in a double, amount, and a PiggyBank, goTO
     //post: returns nothing
     //This method transfers money from one piggy bank to the other
@@ -195,15 +187,12 @@ public class PiggyBank {
 
         value = coinValues[type-1];
 
-        if (bankBalance < value) {
-            System.out.println("You do not have enough money.");
-        } else if (spaceLeft() < 1) {
+        if (spaceLeft() < 1) {
             System.out.println("You do not have enough space in this piggy bank.");
         } else {
             coins[type - 1] += amount;
             amountOfCoins += amount;
             updateMoney();
-            bankBalance-= value * amount;
         }
     }
 
@@ -235,7 +224,7 @@ public class PiggyBank {
     //post: doesn't return anything
     //This method changes (adds or removes) coins from the piggy bank by amount
     public void changeCoinsByAmount(double amount, boolean add, boolean ask, boolean changeBalance) {
-        if ((add && bankBalance >= amount) || (!add && money >= amount)) {
+        if (add || (!add && money >= amount)) {
             double currentAmount = 0;
             int oldAmountOfCoins = amountOfCoins;
             int[] newCoins = new int[5];
@@ -276,15 +265,6 @@ public class PiggyBank {
                     }
                 }
             }
-
-            if (changeBalance) {
-                if (add) {
-                    bankBalance -= amount;
-                } else {
-                    bankBalance += amount;
-                }
-            }
-
             updateMoney();
         } else {
             System.out.println("You do not have enough money.");
@@ -295,26 +275,13 @@ public class PiggyBank {
     //post: doesn't return anything
     //This method allows the piggy bank to upgrade its abilities
     public void upgradeAbility(String ability) {
-        if (bankBalance >= 50) {
-            if (ability.equals("Interest")) {
-                canGainInterest = true;
-            } else if (ability.equals("Withdraw")) {
-                canWithdraw = true;
-            } else if (ability.equals("Invest")) {
-                canInvest = true;
-            }
-
-            bankBalance -= 50;
-        } else {
-            System.out.println("You do not have enough money");
+        if (ability.equals("Interest")) {
+            canGainInterest = true;
+        } else if (ability.equals("Withdraw")) {
+            canWithdraw = true;
+        } else if (ability.equals("Invest")) {
+            canInvest = true;
         }
-    }
-
-    //pre: takes in a double, balance
-    //post: returns nothing
-    //This method sets the variable in the main for the bank balance to the correct value
-    public static void updateBalance(double balance) {
-        bankBalance = balance;
     }
 
     //pre: doesn't take in anything
@@ -344,7 +311,6 @@ public class PiggyBank {
                         "Can gain interest?: " + canGainInterest + "\n" +
                         "Can withdraw?: " + canWithdraw + "\n" +
                         "Can invest?: " + canInvest + "\n\n" +
-                        "User bank balance: $" + bankBalance + "\n\n" +
                         "---------------------------------------------\n";
     }
 }
