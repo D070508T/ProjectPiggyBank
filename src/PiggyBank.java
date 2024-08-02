@@ -310,7 +310,7 @@ public class PiggyBank {
     //post: returns nothing
     //This method sets the variable in the main for the bank balance to the correct value
     public static void updateBalance(double balance) {
-        balance = bankBalance;
+        bankBalance = balance;
     }
 
     //pre: doesn't take in anything
