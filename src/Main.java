@@ -5,5 +5,9 @@ public class Main {
         bank.setName("bank1");
 
         System.out.println(bank.getName());
+
+        bank.setName("NEWBANK");
+
+        System.out.println(bank.getName());
     }
 }
