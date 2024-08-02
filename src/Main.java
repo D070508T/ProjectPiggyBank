@@ -1,6 +1,9 @@
 public class Main {
     public static void main(String[] args) {
-        System.out.println("Hello world!");
-        System.out.println("HEY");
+        PiggyBank bank = new PiggyBank();
+
+        bank.setName("BANK1");
+
+        System.out.println(bank.getName());
     }
 }
