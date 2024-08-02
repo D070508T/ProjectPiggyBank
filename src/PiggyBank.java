@@ -43,24 +43,28 @@ public class PiggyBank {
 
     public PiggyBank(String _tag) {
         tag = _tag;
-        if (tag.equals("Savings")) {
-            cost = 50;
-            volume = 8;
-            canGainInterest = true;
-            canWithdraw = false;
-            canInvest = false;
-        } else if (tag.equals("Spending")) {
-            cost = 10;
-            volume = 4;
-            canGainInterest = false;
-            canWithdraw = true;
-            canInvest = false;
-        } else if (tag.equals("Investment")) {
-            cost = 30;
-            volume = 6;
-            canGainInterest = false;
-            canWithdraw = false;
-            canInvest = true;
+        switch (tag) {
+            case "Savings" -> {
+                cost = 50;
+                volume = 8;
+                canGainInterest = true;
+                canWithdraw = false;
+                canInvest = false;
+            }
+            case "Spending" -> {
+                cost = 10;
+                volume = 4;
+                canGainInterest = false;
+                canWithdraw = true;
+                canInvest = false;
+            }
+            case "Investment" -> {
+                cost = 30;
+                volume = 6;
+                canGainInterest = false;
+                canWithdraw = false;
+                canInvest = true;
+            }
         }
 
         tag = _tag;
