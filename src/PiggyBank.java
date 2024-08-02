@@ -94,10 +94,10 @@ public abstract class PiggyBank {
     //This method transfers money from one piggy bank to the other
     public void transferMoney(double amount, PiggyBank goTo) {
         double oldMoney = goTo.getMoney();
-        changeCoinsByAmount(amount, false, false, false);
-        goTo.changeCoinsByAmount(amount, true, false, false);
+        changeCoinsByAmount(amount, false, false);
+        goTo.changeCoinsByAmount(amount, true, false);
         if (goTo.getMoney() == oldMoney && amount != 0) {
-            changeCoinsByAmount(amount, true, false, false);
+            changeCoinsByAmount(amount, true, false);
         }
     }
 
@@ -133,7 +133,7 @@ public abstract class PiggyBank {
     //pre: takes in a double, amount, and a boolean, add
     //post: doesn't return anything
     //This method changes (adds or removes) coins from the piggy bank by amount
-    public void changeCoinsByAmount(double amount, boolean add, boolean ask, boolean changeBalance) {
+    public void changeCoinsByAmount(double amount, boolean add, boolean ask) {
         if (add || (!add && money >= amount)) {
             double currentAmount = 0;
             int oldAmountOfCoins = amountOfCoins;

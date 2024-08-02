@@ -13,6 +13,6 @@ public class Savings extends PiggyBank {
     //post: doesn't return anything
     //This method allows the piggy bank to gain interest
     public void collectInterest(int percent) {
-        changeCoinsByAmount(0.1*percent*money, true, true, false);
+        changeCoinsByAmount(0.03*money, true, false);
     }
 }
