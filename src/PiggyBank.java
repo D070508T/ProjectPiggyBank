@@ -3,7 +3,6 @@ PIGGY BANK PROJECT
 David Tarandach Tabatschnic
 */
 
-import java.util.Random;
 import java.util.Scanner;
 
 public abstract class PiggyBank {
@@ -63,6 +62,10 @@ public abstract class PiggyBank {
 
     public int[] getCoins() {
         return coins;
+    }
+
+    public void setCoins(int[] newCoins) {
+        coins = newCoins;
     }
 
     public void setName(String Name) {

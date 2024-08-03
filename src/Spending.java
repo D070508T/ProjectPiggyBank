@@ -9,25 +9,24 @@ public class Spending extends PiggyBank {
         name = "Spending Bank";
     }
 
-    public void withdrawCoins(double amount) {
-        int[] oldCoins = new int[5];
-        System.arraycopy(coins, 0, oldCoins, 0, 5);
-        recur(oldCoins, amount);
-    }
-
-    public void recur(int[] newCoins, double amount) {
-        for (int i = 4; i >= 0; i--) {
-            if (newCoins[i] > 0) {
-                newCoins[i]--;
-
-                if (amount > coinValues[i]) {
-                    recur(newCoins, amount - coinValues[i]);
-                } else if (amount == coinValues[i]) {
-                    for (int c : newCoins) {
-                        System.out.println(c);
+    public void withdrawCoins(double amount, int[] newCoins) {
+        if (amount == 0) {
+            for (int c : newCoins) {
+                System.out.println(c);
+            }
+        } else {
+            for (int i = 4; i >= 0; i--) {
+                if (newCoins[i] > 0) {
+                    if (amount > coinValues[i]) {
+                        newCoins[i]--;
+                        withdrawCoins(amount - coinValues[i], newCoins);
+                    } else if (amount == coinValues[i]) {
+                        newCoins[i]--;
+                        for (int c : newCoins) {
+                            System.out.println(c);
+                        }
                     }
                 }
-
             }
         }
     }
