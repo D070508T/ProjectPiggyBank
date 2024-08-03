@@ -3,7 +3,6 @@ public class Custom extends PiggyBank{
         super();
         name = _name;
         volume = _volume;
-        money = 0;
         coins = new int[5];
         amountOfCoins = 0;
         canGainInterest = _canGainInterest;

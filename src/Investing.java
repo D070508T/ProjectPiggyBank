@@ -17,7 +17,7 @@ public class Investing extends PiggyBank {
     public void invest() {
         Random random = new Random();
 
-        double amountOfMoney = 0.3*money;
+        double amountOfMoney = 0.3*getMoney();
 
         int randInt = random.nextInt(1, 3);
 
