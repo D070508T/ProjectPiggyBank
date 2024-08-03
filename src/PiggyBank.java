@@ -10,7 +10,6 @@ public abstract class PiggyBank {
     protected int cost;
     protected int volume;
     protected int capacity;
-    protected double money;
     protected int[] coins;
     protected int amountOfCoins;
     protected String name;
@@ -25,7 +24,6 @@ public abstract class PiggyBank {
     public PiggyBank() {
         name = "";
         volume = 0;
-        money = 0;
         coins = new int[5];
         amountOfCoins = 0;
     }
@@ -57,6 +55,12 @@ public abstract class PiggyBank {
     }
 
     public double getMoney() {
+        double money = 0;
+        for (int i = 0; i < 5; i++) {
+            for (int j = 0; j < coins[i]; j++) {
+                money += coinValues[i];
+            }
+        }
         return money;
     }
 
@@ -95,7 +99,7 @@ public abstract class PiggyBank {
     //pre: takes in a double, amount, and a PiggyBank, goTO
     //post: returns nothing
     //This method transfers money from one piggy bank to the other
-    public void transferMoney(double amount, PiggyBank goTo) {
+    public void transferMoney(double amount, PiggyBank goTo, int n) {
         double oldMoney = goTo.getMoney();
         changeCoinsByAmount(amount, false, false);
         goTo.changeCoinsByAmount(amount, true, false);
@@ -104,16 +108,41 @@ public abstract class PiggyBank {
         }
     }
 
-    //pre: doesn't take in anything
-    //post: doesn't return anything
-    //This method goes through all the coins to update the money
-    public void updateMoney() {
-        money = 0;
-        for (int i = 0; i < 5; i++) {
-            for (int j = 0; j < coins[i]; j++) {
-                money += coinValues[i];
+    public void transferTo(PiggyBank goTo, double amount) {
+        int[] newCoins = withdrawCoins(amount, new int[]{coins[0], coins[1], coins[2], coins[3], coins[4]});
+        if (newCoins[0] != -1) {
+            int coinAmount = 0;
+            int[] coinsUsed = new int[5];
+            for (int i = 0; i < 5; i++) {
+                coinsUsed[i] = coins[i] - newCoins[i];
+                coinAmount += coinsUsed[i];
+            }
+
+            if (goTo.spaceLeft() >= coinAmount) {
+                setCoins(newCoins);
+                for (int i = 0; i < 5; i++) {
+                    goTo.addCoins(i, coinsUsed[i]);
+                }
             }
         }
+    }
+
+    //pre: takes in a double and an int
+    //post: returns an int[]
+    //returns the new combination of coins after using the needed ones to fulfil the amount of money (all values are -1 if there are no possible combos)
+    protected int[] withdrawCoins(double amount, int[] newCoins) {
+        for (int i = 4; i >= 0; i--) {
+            if (newCoins[i] > 0) {
+                if ((int)(amount*100) > (int)(coinValues[i]*100)) {
+                    newCoins[i]--;
+                    return withdrawCoins((double)((int)(amount*100) - (int)(coinValues[i]*100))/100, new int[]{newCoins[0], newCoins[1], newCoins[2], newCoins[3], newCoins[4]});
+                } else if ((int)(amount*100) == (int)(coinValues[i]*100)) {
+                    newCoins[i]--;
+                    return newCoins;
+                }
+            }
+        }
+        return new int[]{-1, -1, -1, -1, -1};
     }
 
     //pre: takes in an integer, amount, and an integer, type
@@ -129,7 +158,6 @@ public abstract class PiggyBank {
         } else {
             coins[type - 1] += amount;
             amountOfCoins += amount;
-            updateMoney();
         }
     }
 
@@ -175,7 +203,10 @@ public abstract class PiggyBank {
                 }
             }
         }
-        updateMoney();
+    }
+
+    private void addCoin(int c, int amount) {
+        coins[c] += amount;
     }
 
     //pre: doesn't take in anything
@@ -192,7 +223,7 @@ public abstract class PiggyBank {
                         "Volume: " + volume + " cubic inches\n" +
                         "Capacity: " + capacity + " coins\n\n" +
 
-                        "Money: $" + money + "\n" +
+                        "Money: $" + getMoney() + "\n" +
                         "Amount of coins: " + amountOfCoins + "\n" +
                         "Space left: " + (capacity - amountOfCoins) + " coins\n" +
                         "Amount of nickels: " + coins[0] + "\n" +

@@ -9,6 +9,9 @@ public class Spending extends PiggyBank {
         name = "Spending Bank";
     }
 
+    //pre: takes in a double and an int
+    //post: returns an int[]
+    //returns the new combination of coins after using the needed ones to fulfil the amount of money (all values are -1 if there are no possible combos)
     public int[] withdrawCoins(double amount, int[] newCoins) {
         for (int i = 4; i >= 0; i--) {
             if (newCoins[i] > 0) {
