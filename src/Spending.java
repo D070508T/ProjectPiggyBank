@@ -10,12 +10,11 @@ public class Spending extends PiggyBank {
     }
 
     public void withdrawCoins(double amount, int[] newCoins) {
-        System.out.println("amount: " + amount);
         for (int i = 4; i >= 0; i--) {
             if (newCoins[i] > 0) {
                 if ((int)(amount*100) > (int)(coinValues[i]*100)) {
                     newCoins[i]--;
-                    withdrawCoins((double)((int)(amount*100) - (int)(coinValues[i]*100))/100, newCoins);
+                    withdrawCoins((double)((int)(amount*100) - (int)(coinValues[i]*100))/100, new int[]{newCoins[0], newCoins[1], newCoins[2], newCoins[3], newCoins[4]});
                 } else if ((int)(amount*100) == (int)(coinValues[i]*100)) {
                     newCoins[i]--;
                     for (int c : newCoins) {
