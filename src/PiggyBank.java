@@ -196,6 +196,9 @@ public abstract class PiggyBank {
         }
     }
 
+    //pre: takes in two ints
+    //post: returns nothing
+    //Gets which coin and how many, and adds it to the coins
     private void addCoin(int c, int amount) {
         coins[c] += amount;
     }
