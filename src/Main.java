@@ -4,6 +4,6 @@ public class Main {
 
         bank.setCoins(new int[]{5, 5, 5, 5, 5});
 
-        bank.withdrawCoins(2.45, new int[]{5, 5, 5, 5, 5});
+        bank.withdrawCoins(0.4, new int[]{5, 5, 5, 5, 5});
     }
 }
