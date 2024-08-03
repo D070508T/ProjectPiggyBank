@@ -5,7 +5,7 @@ David Tarandach Tabatschnic
 
 import java.util.Scanner;
 
-public abstract class PiggyBank {
+public class PiggyBank {
     //Instance variables
     protected int cost;
     protected int volume;
