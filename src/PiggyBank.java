@@ -134,51 +134,45 @@ public abstract class PiggyBank {
     //post: doesn't return anything
     //This method changes (adds or removes) coins from the piggy bank by amount
     public void changeCoinsByAmount(double amount, boolean add, boolean ask) {
-        if (add || (!add && money >= amount)) {
-            double currentAmount = 0;
-            int oldAmountOfCoins = amountOfCoins;
-            int[] newCoins = new int[5];
-            for (int i = 0; i < 5; i++) {
-                newCoins[i] = coins[i];
-            }
+        double currentAmount = 0;
+        int oldAmountOfCoins = amountOfCoins;
+        int[] newCoins = new int[5];
+        System.arraycopy(coins, 0, newCoins, 0, 5);
 
-            for (int i = 4; i >= 0 && currentAmount < amount; i--) {
-                for (int j = 0; currentAmount < amount && j >= 0; j++) {
-                    if (currentAmount + coinValues[i] <= amount) {
-                        currentAmount += coinValues[i];
-                        if (add && spaceLeft() > 0) {
-                            coins[i]++;
-                            amountOfCoins++;
-                        } else {
-                            coins[i]--;
-                            amountOfCoins--;
-                        }
+        for (int i = 4; i >= 0 && currentAmount < amount; i--) {
+            for (int j = 0; currentAmount < amount && j >= 0; j++) {
+                if (currentAmount + coinValues[i] <= amount) {
+                    currentAmount += coinValues[i];
+                    if (add && spaceLeft() > 0) {
+                        coins[i]++;
+                        amountOfCoins++;
                     } else {
-                        j = -2;
+                        coins[i]--;
+                        amountOfCoins--;
                     }
+                } else {
+                    j = -2;
                 }
             }
-
-            if (currentAmount != amount) {
-                if (ask) {
-                    if (add) {
-                        System.out.print("Cannot add $" + amount + ". Would you like to add $" + currentAmount + " instead? (y/n): ");
-                    } else {
-                        System.out.print("Cannot remove $" + amount + " from this bank. Would you like to remove $" + currentAmount + " instead? (y/n): ");
-                    }
-
-                    Scanner scanner = new Scanner(System.in);
-
-                    if (!scanner.nextLine().equalsIgnoreCase("y")) {
-                        coins = newCoins;
-                        amountOfCoins = oldAmountOfCoins;
-                    }
-                }
-            }
-            updateMoney();
-        } else {
-            System.out.println("You do not have enough money.");
         }
+
+        if (currentAmount != amount) {
+            if (ask) {
+                if (add) {
+                    System.out.print("Cannot add $" + amount + ". Would you like to add $" + currentAmount + " instead? (y/n): ");
+                } else {
+                    System.out.print("Cannot remove $" + amount + " from this bank. Would you like to remove $" + currentAmount + " instead? (y/n): ");
+                }
+
+                Scanner scanner = new Scanner(System.in);
+
+                if (!scanner.nextLine().equalsIgnoreCase("y")) {
+                    coins = newCoins;
+                    amountOfCoins = oldAmountOfCoins;
+                }
+            }
+        }
+        updateMoney();
     }
 
     //pre: doesn't take in anything
