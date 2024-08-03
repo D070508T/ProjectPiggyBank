@@ -99,15 +99,6 @@ public abstract class PiggyBank {
     //pre: takes in a double, amount, and a PiggyBank, goTO
     //post: returns nothing
     //This method transfers money from one piggy bank to the other
-    public void transferMoney(double amount, PiggyBank goTo, int n) {
-        double oldMoney = goTo.getMoney();
-        changeCoinsByAmount(amount, false, false);
-        goTo.changeCoinsByAmount(amount, true, false);
-        if (goTo.getMoney() == oldMoney && amount != 0) {
-            changeCoinsByAmount(amount, true, false);
-        }
-    }
-
     public void transferTo(PiggyBank goTo, double amount) {
         int[] newCoins = withdrawCoins(amount, new int[]{coins[0], coins[1], coins[2], coins[3], coins[4]});
         if (newCoins[0] != -1) {
@@ -130,7 +121,7 @@ public abstract class PiggyBank {
     //pre: takes in a double and an int
     //post: returns an int[]
     //returns the new combination of coins after using the needed ones to fulfil the amount of money (all values are -1 if there are no possible combos)
-    protected int[] withdrawCoins(double amount, int[] newCoins) {
+    private int[] withdrawCoins(double amount, int[] newCoins) {
         for (int i = 4; i >= 0; i--) {
             if (newCoins[i] > 0) {
                 if ((int)(amount*100) > (int)(coinValues[i]*100)) {
