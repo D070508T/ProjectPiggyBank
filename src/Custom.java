@@ -20,12 +20,10 @@ public class Custom extends PiggyBank{
     //post: doesn't return anything
     //This method allows the piggy bank to upgrade its abilities
     public void upgradeAbility(String ability) {
-        if (ability.equals("Interest")) {
-            canGainInterest = true;
-        } else if (ability.equals("Withdraw")) {
-            canWithdraw = true;
-        } else if (ability.equals("Invest")) {
-            canInvest = true;
+        switch (ability) {
+            case "Interest" -> canGainInterest = true;
+            case "Withdraw" -> canWithdraw = true;
+            case "Invest" -> canInvest = true;
         }
     }
 }
