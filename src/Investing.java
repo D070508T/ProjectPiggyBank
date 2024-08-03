@@ -22,9 +22,9 @@ public class Investing extends PiggyBank {
         int randInt = random.nextInt(1, 3);
 
         if (randInt == 1) {
-            changeCoinsByAmount(amountOfMoney, true, true);
+            changeCoins(amountOfMoney, new int[]{coins[0], coins[1], coins[2], coins[3], coins[4]}, true);
         } else {
-            changeCoinsByAmount(amountOfMoney, false, false);
+            changeCoins(amountOfMoney, new int[]{coins[0], coins[1], coins[2], coins[3], coins[4]}, false);
         }
     }
 }

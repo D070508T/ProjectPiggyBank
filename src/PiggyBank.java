@@ -100,7 +100,7 @@ public class PiggyBank {
     //post: returns nothing
     //This method transfers money from one piggy bank to the other
     public void transferTo(PiggyBank goTo, double amount) {
-        int[] newCoins = withdrawCoins(amount, new int[]{coins[0], coins[1], coins[2], coins[3], coins[4]});
+        int[] newCoins = changeCoins(amount, new int[]{coins[0], coins[1], coins[2], coins[3], coins[4]}, false);
         if (newCoins[0] != -1) {
             int coinAmount = 0;
             int[] coinsUsed = new int[5];
@@ -112,7 +112,7 @@ public class PiggyBank {
             if (goTo.spaceLeft() >= coinAmount) {
                 setCoins(newCoins);
                 for (int i = 0; i < 5; i++) {
-                    goTo.addCoins(i, coinsUsed[i]);
+                    goTo.addCoin(i, coinsUsed[i]);
                 }
             }
         }
@@ -121,79 +121,27 @@ public class PiggyBank {
     //pre: takes in a double and an int
     //post: returns an int[]
     //returns the new combination of coins after using the needed ones to fulfil the amount of money (all values are -1 if there are no possible combos)
-    private int[] withdrawCoins(double amount, int[] newCoins) {
+    protected int[] changeCoins(double amount, int[] newCoins, boolean add) {
         for (int i = 4; i >= 0; i--) {
-            if (newCoins[i] > 0) {
+            if (add || newCoins[i] > 0) {
                 if ((int)(amount*100) > (int)(coinValues[i]*100)) {
-                    newCoins[i]--;
-                    return withdrawCoins((double)((int)(amount*100) - (int)(coinValues[i]*100))/100, new int[]{newCoins[0], newCoins[1], newCoins[2], newCoins[3], newCoins[4]});
+                    if (add && spaceLeft() > 0) {
+                        newCoins[i]++;
+                    } else if (!add) {
+                        newCoins[i]--;
+                    }
+                    return changeCoins((double)((int)(amount*100) - (int)(coinValues[i]*100))/100, new int[]{newCoins[0], newCoins[1], newCoins[2], newCoins[3], newCoins[4]}, add);
                 } else if ((int)(amount*100) == (int)(coinValues[i]*100)) {
-                    newCoins[i]--;
+                    if (add && spaceLeft() > 0) {
+                        newCoins[i]++;
+                    } else if (!add) {
+                        newCoins[i]--;
+                    }
                     return newCoins;
                 }
             }
         }
         return new int[]{-1, -1, -1, -1, -1};
-    }
-
-    //pre: takes in an integer, amount, and an integer, type
-    //post: doesn't return anything
-    //This method adds coins of the type and amount chosen by the user
-    public void addCoins(int amount, int type) {
-        double value = 0;
-
-        value = coinValues[type-1];
-
-        if (spaceLeft() < 1) {
-            System.out.println("You do not have enough space in this piggy bank.");
-        } else {
-            coins[type - 1] += amount;
-            amountOfCoins += amount;
-        }
-    }
-
-    //pre: takes in a double, amount, and a boolean, add
-    //post: doesn't return anything
-    //This method changes (adds or removes) coins from the piggy bank by amount
-    public void changeCoinsByAmount(double amount, boolean add, boolean ask) {
-        double currentAmount = 0;
-        int oldAmountOfCoins = amountOfCoins;
-        int[] newCoins = new int[5];
-        System.arraycopy(coins, 0, newCoins, 0, 5);
-
-        for (int i = 4; i >= 0 && currentAmount < amount; i--) {
-            for (int j = 0; currentAmount < amount && j >= 0; j++) {
-                if (currentAmount + coinValues[i] <= amount) {
-                    currentAmount += coinValues[i];
-                    if (add && spaceLeft() > 0) {
-                        coins[i]++;
-                        amountOfCoins++;
-                    } else {
-                        coins[i]--;
-                        amountOfCoins--;
-                    }
-                } else {
-                    j = -2;
-                }
-            }
-        }
-
-        if (currentAmount != amount) {
-            if (ask) {
-                if (add) {
-                    System.out.print("Cannot add $" + amount + ". Would you like to add $" + currentAmount + " instead? (y/n): ");
-                } else {
-                    System.out.print("Cannot remove $" + amount + " from this bank. Would you like to remove $" + currentAmount + " instead? (y/n): ");
-                }
-
-                Scanner scanner = new Scanner(System.in);
-
-                if (!scanner.nextLine().equalsIgnoreCase("y")) {
-                    coins = newCoins;
-                    amountOfCoins = oldAmountOfCoins;
-                }
-            }
-        }
     }
 
     //pre: takes in two ints
