@@ -3,8 +3,6 @@ PIGGY BANK PROJECT
 David Tarandach Tabatschnic
 */
 
-import java.util.Scanner;
-
 public class PiggyBank {
     //Instance variables
     protected int cost;
