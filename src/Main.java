@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.Scanner;
 
 public class Main {
@@ -20,23 +21,31 @@ public class Main {
             System.out.print("You do not own a Piggy Bank. Here is the catalogue of Piggy Banks");
             catalogue(cash, scanner);
         } else {
-            System.out.println("""
+            System.out.print("""
                     <1>          Access Piggy Banks
                     <2>              Open Catalogue
                     <3>                        Quit
-                    """);
+                    
+                     >>>\s""");
 
-            switch (scanner.nextLine()) {
-                case "1":
-                    displayBanks();
-                    break;
-                case "2":
-                    catalogue(cash, scanner);
-                    break;
-                case "3":
-                    System.out.println("Goodbye");
-                    System.exit(0);
-            }
+            boolean valid = true;
+
+            do {
+                String input = scanner.nextLine();
+
+                switch (input) {
+                    case "1" -> displayBanks();
+                    case "2" -> catalogue(cash, scanner);
+                    case "3" -> {
+                        System.out.println("Goodbye.");
+                        System.exit(0);
+                    }
+                    default -> {
+                        System.out.println("INVALID RESPONSE\n\n >>> ");
+                        valid = false;
+                    }
+                }
+            } while (!valid);
         }
     }
 
