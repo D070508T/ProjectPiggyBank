@@ -118,57 +118,72 @@ public class Main {
                 
                  >>>\s""");
 
-        PiggyBank bank;
+        PiggyBank bank = null;
+        boolean validInput;
 
-        switch (scanner.nextLine()) {
-            case "1": {
-                bank = new Spending();
-            }
+        do {
+            validInput = true;
+            String userInput = scanner.nextLine();
 
-            case "2": {
-                bank = new Savings();
-            }
+            switch (userInput) {
+                case "1": {
+                    bank = new Spending();
+                    break;
+                }
+                case "2": {
+                    bank = new Savings();
+                    break;
+                }
+                case "3": {
+                    bank = new Investing();
+                    break;
+                }
+                case "4": {
+                    System.out.print("Enter a capacity ($5 per coin): ");
 
-            case "3": {
-                bank = new Investing();
-            }
+                    boolean valid = true;
+                    String input;
 
-            case "4": {
-                System.out.print("Enter a capacity ($5 per coin): ");
+                    do {
+                        input = scanner.nextLine();
+                        valid = true;  // Assume valid input initially
 
-                boolean valid = true;
-                String input;
-
-                do {
-                    input = scanner.nextLine();
-                    for (int i = 0; i < input.length(); i++) {
-                        int num = (int) input.charAt(i);
-                        if (num < 48 || num > 57) {
-                            i = input.length();
-                            valid = false;
-                            System.out.print("INVALID\n\n >>> ");
+                        // Validate input
+                        for (int i = 0; i < input.length(); i++) {
+                            int num = (int) input.charAt(i);
+                            if (num < 48 || num > 57) {  // If not a digit
+                                valid = false;
+                                System.out.print("INVALID\n\n >>> ");
+                                break;
+                            }
                         }
-                    }
-                } while (!valid);
+                    } while (!valid);
 
-                int capacity = Integer.parseInt(input);
+                    int capacity = Integer.parseInt(input);
 
-                System.out.print("($10 now, $20 later) Would you like to be able to withdraw (y/n):");
-                boolean withdraw = yes_no(scanner);
-                System.out.print("($10 now, $20 later) Would you like to be able to collect interest (y/n):");
-                boolean interest = yes_no(scanner);
-                System.out.print("($10 now, $20 later) Would you like to be able to invest (y/n):");
-                boolean invest = yes_no(scanner);
+                    System.out.print("($10 now, $20 later) Would you like to be able to withdraw (y/n):");
+                    boolean withdraw = yes_no(scanner);
+                    System.out.print("($10 now, $20 later) Would you like to be able to collect interest (y/n):");
+                    boolean interest = yes_no(scanner);
+                    System.out.print("($10 now, $20 later) Would you like to be able to invest (y/n):");
+                    boolean invest = yes_no(scanner);
 
-                System.out.print("Enter a name for the bank: ");
-                String name = scanner.nextLine();
+                    System.out.print("Enter a name for the bank: ");
+                    String name = scanner.nextLine();
 
-                bank = new Custom(name, capacity, withdraw, interest, invest);
+                    bank = new Custom(name, capacity, withdraw, interest, invest);
+                    break;
+                }
+                default: {
+                    validInput = false;
+                    System.out.print("INVALID\n\n >>> ");
+                    break;
+                }
             }
+        } while (!validInput);
 
-            default: {
-
-            }
+        if (cash >= bank.getCost()) {
+            // Code to execute if bank is not null and cash is sufficient
         }
     }
 
