@@ -3,10 +3,9 @@ PIGGY BANK PROJECT
 David Tarandach Tabatschnic
 */
 
-public class PiggyBank {
+public abstract class PiggyBank {
     //Instance variables
     protected int cost;
-    protected int volume;
     protected int capacity;
     protected int[] coins;
     protected int amountOfCoins;
@@ -21,7 +20,6 @@ public class PiggyBank {
     //Constructors
     public PiggyBank() {
         name = "";
-        volume = 0;
         coins = new int[5];
         amountOfCoins = 0;
     }
@@ -39,13 +37,8 @@ public class PiggyBank {
         return (int) (0.8 * cost);
     }
 
-    public void setVolume(int Volume) {
-        volume = Volume;
-        capacity = (int) (volume / 0.08);
-    }
-
-    public int getVolume() {
-        return volume;
+    public void setCapacity(int _capacity) {
+        capacity = _capacity;
     }
 
     public int getCapacity() {
@@ -98,7 +91,7 @@ public class PiggyBank {
     //post: returns nothing
     //This method transfers money from one piggy bank to the other
     public void transferTo(PiggyBank goTo, double amount) {
-        int[] newCoins = changeCoins(amount, new int[]{coins[0], coins[1], coins[2], coins[3], coins[4]}, false);
+        int[] newCoins = changeCoins(amount, new int[]{coins[0], coins[1], coins[2], coins[3], coins[4]}, false, true);
         if (newCoins[0] != -1) {
             int coinAmount = 0;
             int[] coinsUsed = new int[5];
@@ -108,7 +101,7 @@ public class PiggyBank {
             }
 
             if (goTo.spaceLeft() >= coinAmount) {
-                setCoins(newCoins);
+                coins = newCoins;
                 for (int i = 0; i < 5; i++) {
                     goTo.addCoin(i, coinsUsed[i]);
                 }
@@ -116,10 +109,10 @@ public class PiggyBank {
         }
     }
 
-    //pre: takes in a double and an int
+    //pre: takes in a double, an int, and two booleans
     //post: returns an int[]
     //returns the new combination of coins after using the needed ones to fulfil the amount of money (all values are -1 if there are no possible combos)
-    protected int[] changeCoins(double amount, int[] newCoins, boolean add) {
+    protected int[] changeCoins(double amount, int[] newCoins, boolean add, boolean returnSuccess) {
         for (int i = 4; i >= 0; i--) {
             if (add || newCoins[i] > 0) {
                 if ((int)(amount*100) > (int)(coinValues[i]*100)) {
@@ -128,7 +121,7 @@ public class PiggyBank {
                     } else if (!add) {
                         newCoins[i]--;
                     }
-                    return changeCoins((double)((int)(amount*100) - (int)(coinValues[i]*100))/100, new int[]{newCoins[0], newCoins[1], newCoins[2], newCoins[3], newCoins[4]}, add);
+                    return changeCoins((double)((int)(amount*100) - (int)(coinValues[i]*100))/100, new int[]{newCoins[0], newCoins[1], newCoins[2], newCoins[3], newCoins[4]}, add, returnSuccess);
                 } else if ((int)(amount*100) == (int)(coinValues[i]*100)) {
                     if (add && spaceLeft() > 0) {
                         newCoins[i]++;
@@ -138,6 +131,9 @@ public class PiggyBank {
                     return newCoins;
                 }
             }
+        }
+        if (add || !returnSuccess) {
+            return newCoins;
         }
         return new int[]{-1, -1, -1, -1, -1};
     }
@@ -151,6 +147,11 @@ public class PiggyBank {
 
     //pre: doesn't take in anything
     //post: returns a String
+    //This method displays the information for the specific PiggyBank
+    public abstract String info();
+
+    //pre: doesn't take in anything
+    //post: returns a String
     //This method displays the PiggyBank object in an organized way
     public String toString() {
         return
@@ -160,7 +161,6 @@ public class PiggyBank {
                         "Cost: $" + cost + "\n" +
                         "Sell cost: $" + getSellCost() + "\n\n" +
 
-                        "Volume: " + volume + " cubic inches\n" +
                         "Capacity: " + capacity + " coins\n\n" +
 
                         "Money: $" + getMoney() + "\n" +
