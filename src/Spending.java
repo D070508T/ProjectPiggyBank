@@ -15,20 +15,4 @@ public class Spending extends PiggyBank {
     public int[] withdrawCoins(double amount, int[] newCoins) {
         return changeCoins(amount, newCoins, false, true);
     }
-
-    //pre: doesn't take in anything
-    //post: returns a String
-    //This method displays the information for the specific PiggyBank
-    @Override
-    public String info() {
-        return """
-                Cost: $50
-                
-                Capacity: 30
-                
-                Description:
-                  This piggy bank can withdraw coins to
-                  keep in your wallet.
-                """;
-    }
 }

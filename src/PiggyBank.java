@@ -3,7 +3,7 @@ PIGGY BANK PROJECT
 David Tarandach Tabatschnic
 */
 
-public abstract class PiggyBank {
+public class PiggyBank {
     //Instance variables
     protected int cost;
     protected int capacity;
@@ -144,11 +144,6 @@ public abstract class PiggyBank {
     private void addCoin(int c, int amount) {
         coins[c] += amount;
     }
-
-    //pre: doesn't take in anything
-    //post: returns a String
-    //This method displays the information for the specific PiggyBank
-    public abstract String info();
 
     //pre: doesn't take in anything
     //post: returns a String

@@ -1,4 +1,9 @@
 public class Custom extends PiggyBank{
+
+    public Custom() {
+        super();
+    }
+
     public Custom(String _name, int _capacity, boolean _canGainInterest, boolean _canWithdraw, boolean _canInvest) {
         super();
         name = _name;
@@ -23,27 +28,5 @@ public class Custom extends PiggyBank{
             case "Withdraw" -> canWithdraw = true;
             case "Invest" -> canInvest = true;
         }
-    }
-
-    //pre: doesn't take in anything
-    //post: returns a String
-    //This method displays the information for the specific PiggyBank
-    @Override
-    public String info() {
-        return """
-                Base cost: $5 * capacity
-                
-                Added cost: $10 per ability
-                
-                Abilities:
-                  Gain interest
-                  Withdraw
-                  Invest
-                
-                Description:
-                  This Piggy Bank is fully customizable. You can
-                  choose exactly how you want it and price it
-                  accordingly
-                """;
     }
 }

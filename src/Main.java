@@ -53,6 +53,8 @@ public class Main {
         for (int i = 0; i < userBanks.size(); i++) {
             System.out.println("<"+i+">" + userBanks.get(i).getName());
         }
+
+        //CONTINUE METHOD
     }
 
     public static void catalogue(double cash, Scanner scanner) {
@@ -61,32 +63,81 @@ public class Main {
                 
                    ---<<< CATALOGUE >>>---
                 
-                
+                -------------------------------------------------------
                 <1>     Spending Piggy Bank ($50)
                 
+                Base cost: $5 * capacity
+                
+                Added cost: $10 per ability
+                
+                Abilities:
+                  Gain interest
+                  Withdraw
+                  Invest
+                
+                Description:
+                  This Piggy Bank is fully customizable. You can
+                  choose exactly how you want it and price it
+                  accordingly
+                -------------------------------------------------------
                 <2>     Savings Piggy Bank ($100)
                 
+                Cost: $50
+                
+                Capacity: 30
+                
+                Description:
+                  This piggy bank can withdraw coins to
+                  keep in your wallet.
+                -------------------------------------------------------
                 <3>     Investing Piggy Bank ($70)
                 
+                Cost: $200
+                
+                Capacity: 100
+                
+                Description:
+                  This piggy bank can gain 3% interest
+                -------------------------------------------------------
                 <4>     Custom Piggy Bank ($Custom pricing)
                 
+                Cost: $70
                 
-                Enter 'PURCHASE 1/2/3/4' to purchase a Piggy Bank
+                Capacity: 55
                 
-                Enter 'SEE 1/2/3/4' to see full Piggy Bank information
+                Description:
+                  This piggy bank can invest
+                  with a 50/50 chance of either
+                  doubling or halving your balance
+                -------------------------------------------------------
+                Enter a number to purchase
+                
+                Or
+                
+                Enter anything else to go back
                 
                  >>>\s""");
 
-        boolean valid = true;
+        switch (scanner.nextLine()) {
+            case "1": {
 
-        String input = scanner.nextLine();
+            }
 
-        if (input.length() == 10 && input.startsWith("PURCHASE ")) {
+            case "2": {
 
-        } else if (input.length() == 5 && input.startsWith("SEE ")) {
+            }
 
-        } else {
-            valid = false;
+            case "3": {
+
+            }
+
+            case "4": {
+
+            }
+
+            default: {
+
+            }
         }
     }
 }

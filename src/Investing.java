@@ -25,21 +25,4 @@ public class Investing extends PiggyBank {
             changeCoins(0.5 * getMoney(), new int[]{coins[0], coins[1], coins[2], coins[3], coins[4]}, false, false);
         }
     }
-
-    //pre: doesn't take in anything
-    //post: returns a String
-    //This method displays the information for the specific PiggyBank
-    @Override
-    public String info() {
-        return """
-                Cost: $70
-                
-                Capacity: 55
-                
-                Description:
-                  This piggy bank can invest
-                  with a 50/50 chance of either
-                  doubling or halving your balance
-                """;
-    }
 }
