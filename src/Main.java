@@ -112,6 +112,8 @@ public class Main {
                 ((Savings) bank).collectInterest();
             } else if (input.equalsIgnoreCase("I") && bank.canInvest) {
                 ((Investing) bank).invest();
+            } else if (input.equalsIgnoreCase("T")) {
+                //transfer
             }
         } while (!valid);
     }
