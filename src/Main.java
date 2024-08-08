@@ -107,7 +107,7 @@ public class Main {
             input = scanner.nextLine();
 
             if (input.equalsIgnoreCase("W") && bank.canWithdraw) {
-                //withdraw
+                withdraw(bank);
             } else if (input.equalsIgnoreCase("G") && bank.canGainInterest) {
                 ((Savings) bank).collectInterest();
             } else if (input.equalsIgnoreCase("I") && bank.canInvest) {
@@ -119,6 +119,43 @@ public class Main {
                 valid = false;
             }
         } while (!valid);
+    }
+
+    public static void withdraw(PiggyBank bank) {
+        String input;
+        boolean valid;
+        boolean isPeriod;
+
+        do {
+            input = scanner.nextLine();
+            valid = true;
+            isPeriod = false;
+
+            for (int i = 0; i < input.length(); i++) {
+                char c = input.charAt(i);
+                if ((int) c < 49 || (int) c > 57) {
+                    if (c == '.') {
+                        if (isPeriod) {
+                            valid = false;
+                            i = input.length();
+                            System.out.print("INVALID\n\n >>> ");
+                        } else {
+                            isPeriod = true;
+                        }
+                    } else {
+                        valid = false;
+                        i = input.length();
+                        System.out.print("INVALID\n\n >>> ");
+                    }
+                }
+            }
+        } while (!valid);
+
+        double amount = Double.parseDouble(input);
+
+        if (((Spending) bank).withdrawCoins(amount)) {
+            cash -= amount;
+        }
     }
 
     public static void catalogue() {

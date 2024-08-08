@@ -1,3 +1,5 @@
+import java.util.Scanner;
+
 public class Spending extends PiggyBank {
     public Spending() {
         super();
@@ -10,15 +12,17 @@ public class Spending extends PiggyBank {
     }
 
     //pre: takes in a double and an int
-    //post: returns an int[]
+    //post: returns a boolean to check if the transaction was successful
     //returns the new combination of coins after using the needed ones to fulfil the amount of money (all values are -1 if there are no possible combos)
-    public void withdrawCoins(double amount) {
+    public boolean withdrawCoins(double amount) {
         int[] c = changeCoins(amount, newCoins(), false, true);
 
         if (c[0] != -1) {
             coins = c;
+            return true;
         } else {
             System.out.println("This withdrawal was not possible.");
+            return false;
         }
     }
 }
