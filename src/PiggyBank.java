@@ -125,15 +125,22 @@ public class PiggyBank {
     protected int[] changeCoins(double amount, int[] newCoins, boolean add, boolean returnSuccess) {
         for (int i = 4; i >= 0; i--) {
             if (add || newCoins[i] > 0) {
+
+                int amountOfCoins = 0;
+
+                for (int j = 0; j < 5; j++) {
+                    amountOfCoins += newCoins[j];
+                }
+
                 if ((int)(amount*100) > (int)(coinValues[i]*100)) {
-                    if (add && spaceLeft() > 0) {
+                    if (add && amountOfCoins < capacity) {
                         newCoins[i]++;
                     } else if (!add) {
                         newCoins[i]--;
                     }
                     return changeCoins((double)((int)(amount*100) - (int)(coinValues[i]*100))/100, newCoins(), add, returnSuccess);
                 } else if ((int)(amount*100) == (int)(coinValues[i]*100)) {
-                    if (add && spaceLeft() > 0) {
+                    if (add && amountOfCoins < capacity) {
                         newCoins[i]++;
                     } else if (!add) {
                         newCoins[i]--;
