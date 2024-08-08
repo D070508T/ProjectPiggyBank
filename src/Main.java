@@ -80,9 +80,7 @@ public class Main {
             return;
         }
 
-        int bankNum = Integer.parseInt(input);
-
-        //Make bank usable
+        PiggyBank bank = userBanks.get(Integer.parseInt(input)-1);
     }
 
     public static void catalogue() {
