@@ -156,11 +156,11 @@ public class PiggyBank {
                         "Cost: $" + cost + "\n" +
                         "Sell cost: $" + getSellCost() + "\n\n" +
 
-                        "Capacity: " + capacity + " coins\n\n" +
+                        "Capacity: " + capacity + " coins\n" +
+                        "Space left: " + spaceLeft() + " coins\n\n" +
 
                         "Money: $" + getMoney() + "\n" +
                         "Amount of coins: " + amountOfCoins + "\n" +
-                        "Space left: " + (capacity - amountOfCoins) + " coins\n" +
                         "Amount of nickels: " + coins[0] + "\n" +
                         "Amount of dimes: " + coins[1] + "\n" +
                         "Amount of quarters: " + coins[2] + "\n" +
