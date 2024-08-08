@@ -131,12 +131,36 @@ public class Main {
             } else if (input.equalsIgnoreCase("T")) {
                 transfer(bank);
             } else if (input.equalsIgnoreCase("D")) {
-
+                deposit();
             } else {
                 System.out.print("INVALID\n\n >>> ");
                 valid = false;
             }
         } while (!valid);
+    }
+
+    public static void deposit() {
+        System.out.print("""
+                        Would you rather add coins (enter anything else to go back):
+                        
+                        <1>   By amount
+                        <2>   By individual coins
+                        
+                         >>>\s""");
+
+        String choice = scanner.nextLine();
+
+        if (notDigit(choice)) {
+            return;
+        }
+
+        if (choice.equalsIgnoreCase("1")) {
+
+        } else if (choice.equalsIgnoreCase("2")) {
+
+        } else {
+            return;
+        }
     }
 
     public static void transfer(PiggyBank bank) {
