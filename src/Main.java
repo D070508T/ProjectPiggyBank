@@ -59,28 +59,43 @@ public class Main {
                 
                 Enter anything else to go back.
                 """);
+
+        PiggyBank b = chooseBank();
+
+        if (b == null) {
+            return;
+        }
+
+        useBank(b);
+    }
+
+    public static PiggyBank chooseBank() {
         for (int i = 1; i <= userBanks.size(); i++) {
             System.out.println("<"+i+">" + userBanks.get(i-1).getName());
         }
 
+        System.out.print("Choose a bank: ");
+
         String input = scanner.nextLine();
 
-        boolean isDigit = true;
+        if (notDigit(input) || Integer.parseInt(input) < 1 && Integer.parseInt(input) > userBanks.size()) {
+            return null;
+        }
+
+        return userBanks.get(Integer.parseInt(input) - 1);
+    }
+
+    public static boolean notDigit(String input) {
 
         int l = input.length();
         for (int i = 0; i < l; i++) {
             int c = (input.charAt(i));
             if (c < 49 || c > 57) {
-                isDigit = false;
-                i = l;
+                return true;
             }
         }
 
-        if (!isDigit || Integer.parseInt(input) < 1 && Integer.parseInt(input) > userBanks.size()) {
-            return;
-        }
-
-        useBank(userBanks.get(Integer.parseInt(input)-1));
+        return false;
     }
 
     public static void useBank(PiggyBank bank) {
@@ -113,12 +128,32 @@ public class Main {
             } else if (input.equalsIgnoreCase("I") && bank.canInvest) {
                 ((Investing) bank).invest();
             } else if (input.equalsIgnoreCase("T")) {
-                //transfer
+                transfer(bank);
             } else {
                 System.out.print("INVALID\n\n >>> ");
                 valid = false;
             }
         } while (!valid);
+    }
+
+    public static void transfer(PiggyBank bank) {
+        System.out.print("Choose a bank to transfer coins to\n\nEnter anything else to go back\n");
+
+        PiggyBank b = chooseBank();
+
+        if (b == null) {
+            return;
+        }
+
+        System.out.print("Enter an amount\n\nEnter anything else to go back\n\n >>> ");
+
+        String amount = scanner.nextLine();
+
+        if (notDigit(amount)) {
+            return;
+        }
+
+        bank.transferTo(b, Integer.parseInt(amount));
     }
 
     public static void withdraw(PiggyBank bank) {

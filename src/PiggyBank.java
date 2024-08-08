@@ -105,8 +105,14 @@ public class PiggyBank {
                 for (int i = 0; i < 5; i++) {
                     goTo.addCoin(i, coinsUsed[i]);
                 }
+
+                System.out.println("Transaction successful");
             }
+
+            System.out.println("Transaction failed");
         }
+
+        System.out.println("Transaction failed");
     }
 
     public int[] newCoins() {
