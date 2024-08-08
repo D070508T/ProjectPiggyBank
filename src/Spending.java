@@ -5,8 +5,8 @@ public class Spending extends PiggyBank {
         super();
         cost = 50;
         capacity = 30;
-        canGainInterest = true;
-        canWithdraw = false;
+        canGainInterest = false;
+        canWithdraw = true;
         canInvest = false;
         name = "Spending Bank";
     }

@@ -3,8 +3,8 @@ public class Savings extends PiggyBank {
         super();
         cost = 200;
         capacity = 100;
-        canGainInterest = false;
-        canWithdraw = true;
+        canGainInterest = true;
+        canWithdraw = false;
         canInvest = false;
         name = "Savings Bank";
     }
