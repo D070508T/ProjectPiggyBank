@@ -122,6 +122,7 @@ public class Main {
     }
 
     public static void withdraw(PiggyBank bank) {
+        System.out.print("Enter an amount of money: ");
         String input;
         boolean valid;
         boolean isPeriod;
