@@ -114,6 +114,9 @@ public class Main {
                 ((Investing) bank).invest();
             } else if (input.equalsIgnoreCase("T")) {
                 //transfer
+            } else {
+                System.out.print("INVALID\n\n >>> ");
+                valid = false;
             }
         } while (!valid);
     }
