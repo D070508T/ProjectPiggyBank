@@ -2,53 +2,58 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Main {
+
+    static Scanner scanner = new Scanner(System.in);
+    static double cash = 1500;
+    static ArrayList<PiggyBank> userBanks = new ArrayList<>();
+
     public static void main(String[] args) {
-        double cash = 0;
-        ArrayList<PiggyBank> userBanks = new ArrayList<>();
-        main_menu(userBanks, cash, new Scanner(System.in));
+        main_menu();
     }
 
-    public static void main_menu(ArrayList<PiggyBank> userBanks, double cash, Scanner scanner) {
-        System.out.println(
-                "     -----<<< MAIN MENU >>>-----\n\n" +
-                        "Cash: $" + cash + "\n"
-        );
+    public static void main_menu() {
+        while (true) {
+            System.out.println(
+                    "     -----<<< MAIN MENU >>>-----\n\n" +
+                            "Cash: $" + cash + "\n"
+            );
 
-        int amount = userBanks.size();
+            int amount = userBanks.size();
 
-        if (amount == 0) {
-            System.out.print("You do not own a Piggy Bank. Here is the catalogue of Piggy Banks");
-            catalogue(cash, scanner);
-        } else {
-            System.out.print("""
-                    <1>        See Your Piggy Banks
-                    <2>                  Open Store
-                    <3>                        Quit
-                    
-                     >>>\s""");
+            if (amount == 0) {
+                System.out.print("You do not own a Piggy Bank. Here is the catalogue of Piggy Banks");
+                catalogue();
+            } else {
+                System.out.print("""
+                        <1>        See Your Piggy Banks
+                        <2>                  Open Store
+                        <3>                        Quit
 
-            boolean valid = true;
+                         >>>\s""");
 
-            do {
-                String input = scanner.nextLine();
+                boolean valid = true;
 
-                switch (input) {
-                    case "1" -> displayBanks(userBanks);
-                    case "2" -> catalogue(cash, scanner);
-                    case "3" -> {
-                        System.out.println("Goodbye.");
-                        System.exit(0);
+                do {
+                    String input = scanner.nextLine();
+
+                    switch (input) {
+                        case "1" -> displayBanks();
+                        case "2" -> catalogue();
+                        case "3" -> {
+                            System.out.println("Goodbye.");
+                            System.exit(0);
+                        }
+                        default -> {
+                            System.out.println("INVALID RESPONSE\n\n >>> ");
+                            valid = false;
+                        }
                     }
-                    default -> {
-                        System.out.println("INVALID RESPONSE\n\n >>> ");
-                        valid = false;
-                    }
-                }
-            } while (!valid);
+                } while (!valid);
+            }
         }
     }
 
-    public static void displayBanks(ArrayList<PiggyBank> userBanks) {
+    public static void displayBanks() {
         System.out.println("Choose a Piggy Bank to see its full information and be able to use it");
         for (int i = 0; i < userBanks.size(); i++) {
             System.out.println("<"+i+">" + userBanks.get(i).getName());
@@ -57,7 +62,7 @@ public class Main {
         //CONTINUE METHOD
     }
 
-    public static void catalogue(double cash, Scanner scanner) {
+    public static void catalogue() {
         System.out.println("Your current balance: $" + cash);
         System.out.print("""
                 
@@ -141,16 +146,15 @@ public class Main {
                 case "4": {
                     System.out.print("Enter a capacity ($5 per coin): ");
 
-                    boolean valid = true;
+                    boolean valid;
                     String input;
 
                     do {
                         input = scanner.nextLine();
-                        valid = true;  // Assume valid input initially
+                        valid = true;
 
-                        // Validate input
                         for (int i = 0; i < input.length(); i++) {
-                            int num = (int) input.charAt(i);
+                            int num = input.charAt(i);
                             if (num < 48 || num > 57) {  // If not a digit
                                 valid = false;
                                 System.out.print("INVALID\n\n >>> ");
@@ -162,11 +166,11 @@ public class Main {
                     int capacity = Integer.parseInt(input);
 
                     System.out.print("($10 now, $20 later) Would you like to be able to withdraw (y/n):");
-                    boolean withdraw = yes_no(scanner);
+                    boolean withdraw = yes_no();
                     System.out.print("($10 now, $20 later) Would you like to be able to collect interest (y/n):");
-                    boolean interest = yes_no(scanner);
+                    boolean interest = yes_no();
                     System.out.print("($10 now, $20 later) Would you like to be able to invest (y/n):");
-                    boolean invest = yes_no(scanner);
+                    boolean invest = yes_no();
 
                     System.out.print("Enter a name for the bank: ");
                     String name = scanner.nextLine();
@@ -183,11 +187,15 @@ public class Main {
         } while (!validInput);
 
         if (cash >= bank.getCost()) {
-            // Code to execute if bank is not null and cash is sufficient
+            userBanks.add(bank);
+            cash -= bank.getCost();
+            System.out.println("Successfully purchased " + bank.getName());
+        } else {
+            System.out.println("You do not have enough money to purchase this bank.");
         }
     }
 
-    public static boolean yes_no(Scanner scanner) {
+    public static boolean yes_no() {
         String input;
 
         while (true) {
