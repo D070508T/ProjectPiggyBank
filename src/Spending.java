@@ -17,6 +17,8 @@ public class Spending extends PiggyBank {
 
         if (c[0] != -1) {
             coins = c;
+        } else {
+            System.out.println("This withdrawal was not possible.");
         }
     }
 }

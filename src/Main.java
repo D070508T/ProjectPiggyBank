@@ -84,7 +84,9 @@ public class Main {
     }
 
     public static void useBank(PiggyBank bank) {
-        System.out.println(bank);
+        System.out.println(bank + "\n\n");
+
+        System.out.println("< T >     Transfer");
 
         if (bank.canWithdraw) {
             System.out.println("< W >     Withdraw");
