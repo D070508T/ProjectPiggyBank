@@ -80,7 +80,38 @@ public class Main {
             return;
         }
 
-        PiggyBank bank = userBanks.get(Integer.parseInt(input)-1);
+        useBank(userBanks.get(Integer.parseInt(input)-1));
+    }
+
+    public static void useBank(PiggyBank bank) {
+        System.out.println(bank);
+
+        if (bank.canWithdraw) {
+            System.out.println("< W >     Withdraw");
+        }
+
+        if (bank.canGainInterest) {
+            System.out.println("< G >     Gain 3% Interest");
+        }
+
+        if (bank.canInvest) {
+            System.out.println("< I >     Invest");
+        }
+
+        String input;
+        boolean valid = true;
+
+        do {
+            input = scanner.nextLine();
+
+            if (input.equalsIgnoreCase("W") && bank.canWithdraw) {
+                //withdraw
+            } else if (input.equalsIgnoreCase("G") && bank.canGainInterest) {
+                ((Savings) bank).collectInterest();
+            } else if (input.equalsIgnoreCase("I") && bank.canInvest) {
+                ((Investing) bank).invest();
+            }
+        } while (!valid);
     }
 
     public static void catalogue() {

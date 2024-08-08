@@ -91,7 +91,7 @@ public class PiggyBank {
     //post: returns nothing
     //This method transfers money from one piggy bank to the other
     public void transferTo(PiggyBank goTo, double amount) {
-        int[] newCoins = changeCoins(amount, new int[]{coins[0], coins[1], coins[2], coins[3], coins[4]}, false, true);
+        int[] newCoins = changeCoins(amount, newCoins(), false, true);
         if (newCoins[0] != -1) {
             int coinAmount = 0;
             int[] coinsUsed = new int[5];
@@ -109,6 +109,10 @@ public class PiggyBank {
         }
     }
 
+    public int[] newCoins() {
+        return new int[]{coins[0], coins[1], coins[2], coins[3], coins[4]};
+    }
+
     //pre: takes in a double, an int, and two booleans
     //post: returns an int[]
     //returns the new combination of coins after using the needed ones to fulfil the amount of money (all values are -1 if there are no possible combos)
@@ -121,7 +125,7 @@ public class PiggyBank {
                     } else if (!add) {
                         newCoins[i]--;
                     }
-                    return changeCoins((double)((int)(amount*100) - (int)(coinValues[i]*100))/100, new int[]{newCoins[0], newCoins[1], newCoins[2], newCoins[3], newCoins[4]}, add, returnSuccess);
+                    return changeCoins((double)((int)(amount*100) - (int)(coinValues[i]*100))/100, newCoins(), add, returnSuccess);
                 } else if ((int)(amount*100) == (int)(coinValues[i]*100)) {
                     if (add && spaceLeft() > 0) {
                         newCoins[i]++;
