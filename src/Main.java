@@ -54,12 +54,35 @@ public class Main {
     }
 
     public static void displayBanks() {
-        System.out.println("Choose a Piggy Bank to see its full information and be able to use it");
-        for (int i = 0; i < userBanks.size(); i++) {
-            System.out.println("<"+i+">" + userBanks.get(i).getName());
+        System.out.println("""
+                Choose a Piggy Bank to see its full information and be able to use it
+                
+                Enter anything else to go back.
+                """);
+        for (int i = 1; i <= userBanks.size(); i++) {
+            System.out.println("<"+i+">" + userBanks.get(i-1).getName());
         }
 
-        //CONTINUE METHOD
+        String input = scanner.nextLine();
+
+        boolean isDigit = true;
+
+        int l = input.length();
+        for (int i = 0; i < l; i++) {
+            int c = (input.charAt(i));
+            if (c < 49 || c > 57) {
+                isDigit = false;
+                i = l;
+            }
+        }
+
+        if (!isDigit || Integer.parseInt(input) < 1 && Integer.parseInt(input) > userBanks.size()) {
+            return;
+        }
+
+        int bankNum = Integer.parseInt(input);
+
+        //Make bank usable
     }
 
     public static void catalogue() {
