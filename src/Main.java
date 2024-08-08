@@ -102,6 +102,7 @@ public class Main {
         System.out.println(bank + "\n\n");
 
         System.out.println("< T >     Transfer");
+        System.out.println("< D >     Deposit coins");
 
         if (bank.canWithdraw) {
             System.out.println("< W >     Withdraw");
@@ -129,6 +130,8 @@ public class Main {
                 ((Investing) bank).invest();
             } else if (input.equalsIgnoreCase("T")) {
                 transfer(bank);
+            } else if (input.equalsIgnoreCase("D")) {
+
             } else {
                 System.out.print("INVALID\n\n >>> ");
                 valid = false;
