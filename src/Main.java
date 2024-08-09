@@ -78,20 +78,32 @@ public class Main {
 
         String input = scanner.nextLine();
 
-        if (notDigit(input) || Integer.parseInt(input) < 1 && Integer.parseInt(input) > userBanks.size()) {
+        if (notDigit(input, true) || Integer.parseInt(input) < 1 && Integer.parseInt(input) > userBanks.size()) {
             return null;
         }
 
         return userBanks.get(Integer.parseInt(input) - 1);
     }
 
-    public static boolean notDigit(String input) {
-
+    public static boolean notDigit(String input, boolean integer) {
+        boolean isPeriod = false;
         int l = input.length();
         for (int i = 0; i < l; i++) {
             int c = (input.charAt(i));
-            if (c < 49 || c > 57) {
-                return true;
+            if (c < 48 || c > 57) {
+                if (integer) {
+                    return true;
+                }
+
+                if (c != 46) {
+                    return true;
+                }
+
+                if (isPeriod) {
+                    return true;
+                }
+
+                isPeriod = true;
             }
         }
 
@@ -150,10 +162,6 @@ public class Main {
 
         String choice = scanner.nextLine();
 
-        if (notDigit(choice)) {
-            return;
-        }
-
         if (choice.equalsIgnoreCase("1")) {
             depositAmount(bank);
         } else if (choice.equalsIgnoreCase("2")) {
@@ -166,7 +174,7 @@ public class Main {
 
         String input = scanner.nextLine();
 
-        if (notDigit(input)) {
+        if (notDigit(input, false)) {
             return;
         }
 
@@ -196,7 +204,7 @@ public class Main {
 
         String c = scanner.nextLine();
 
-        if (c.length() != 1 || notDigit(c)) {
+        if (c.length() != 1) {
             return;
         }
 
@@ -215,7 +223,7 @@ public class Main {
         while (true) {
             amount = scanner.nextLine();
 
-            if (!notDigit(amount) && Integer.parseInt(amount) <= space) {
+            if (!notDigit(amount, true) && Integer.parseInt(amount) <= space) {
                 break;
             }
 
@@ -241,7 +249,7 @@ public class Main {
 
         String amount = scanner.nextLine();
 
-        if (notDigit(amount)) {
+        if (notDigit(amount, false)) {
             return;
         }
 

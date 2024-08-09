@@ -8,7 +8,6 @@ public class PiggyBank {
     protected int cost;
     protected int capacity;
     protected int[] coins;
-    protected int amountOfCoins;
     protected String name;
     protected boolean canGainInterest;
     protected boolean canWithdraw;
@@ -21,12 +20,20 @@ public class PiggyBank {
     public PiggyBank() {
         name = "";
         coins = new int[5];
-        amountOfCoins = 0;
     }
 
     // Getters and setters
     public int getCost() {
         return cost;
+    }
+
+    public int amountOfCoins() {
+        int c = 0;
+        for (int coin : coins) {
+            c += coin;
+        }
+
+        return c;
     }
 
     public void setCost(int Cost) {
@@ -84,7 +91,7 @@ public class PiggyBank {
     }
 
     public int spaceLeft() {
-        return capacity - amountOfCoins;
+        return capacity - amountOfCoins();
     }
 
     //pre: takes in a double, amount, and a PiggyBank, goTO
@@ -160,6 +167,7 @@ public class PiggyBank {
     //Gets which coin and how many, and adds it to the coins
     public void addCoin(int c, int amount) {
         coins[c] += amount;
+
     }
 
     //pre: doesn't take in anything
@@ -177,7 +185,7 @@ public class PiggyBank {
                         "Space left: " + spaceLeft() + " coins\n\n" +
 
                         "Money: $" + getMoney() + "\n" +
-                        "Amount of coins: " + amountOfCoins + "\n" +
+                        "Amount of coins: " + amountOfCoins() + "\n" +
                         "Amount of nickels: " + coins[0] + "\n" +
                         "Amount of dimes: " + coins[1] + "\n" +
                         "Amount of quarters: " + coins[2] + "\n" +

@@ -4,7 +4,6 @@ public class Custom extends PiggyBank{
         super();
         name = _name;
         coins = new int[5];
-        amountOfCoins = 0;
         canGainInterest = _canGainInterest;
         canWithdraw = _canWithdraw;
         canInvest = _canInvest;
