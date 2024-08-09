@@ -126,41 +126,41 @@ public class PiggyBank {
         return new int[]{coins[0], coins[1], coins[2], coins[3], coins[4]};
     }
 
-    //pre: takes in a double, an int, and two booleans
-    //post: returns an int[]
-    //returns the new combination of coins after using the needed ones to fulfil the amount of money (all values are -1 if there are no possible combos)
     protected int[] changeCoins(double amount, int[] newCoins, boolean add, boolean returnSuccess) {
         for (int i = 4; i >= 0; i--) {
             if (add || newCoins[i] > 0) {
 
                 int amountOfCoins = 0;
-
                 for (int j = 0; j < 5; j++) {
                     amountOfCoins += newCoins[j];
                 }
 
-                if (amount > coinValues[i]) {
+                // Check if we can use the current coin value
+                while (amount >= coinValues[i]) {
                     if (add && amountOfCoins < capacity) {
                         newCoins[i]++;
+                        amount -= coinValues[i];  // Subtract the value of the coin
                     } else if (!add) {
                         newCoins[i]--;
+                        amount -= coinValues[i];  // Subtract the value of the coin
                     }
-                    return changeCoins((double)((int)(amount*100) - (int)(coinValues[i]*100))/100, newCoins(), add, returnSuccess);
-                } else if (amount == coinValues[i]) {
-                    if (add && amountOfCoins < capacity) {
-                        newCoins[i]++;
-                    } else if (!add) {
-                        newCoins[i]--;
-                    }
+                }
+
+                // If the amount is exactly a coin value, handle it
+                if (amount == 0) {
                     return newCoins;
                 }
             }
         }
+
         if (add || !returnSuccess) {
             return newCoins;
         }
+
+        // Return an array indicating no valid combinations found
         return new int[]{-1, -1, -1, -1, -1};
     }
+
 
     //pre: takes in two ints
     //post: returns nothing
