@@ -177,7 +177,7 @@ public class Main {
         if (newCoins[0] == -1) {
             System.out.println("Deposit failed.");
         } else {
-            System.out.println("Successful transaction");
+            System.out.println("Successful deposit");
             bank.setCoins(newCoins);
             cash -= amount;
         }
