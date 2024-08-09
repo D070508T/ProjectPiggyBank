@@ -134,6 +134,10 @@ public class Main {
             System.out.println("< I >     Invest");
         }
 
+        if (bank instanceof Custom) {
+            System.out.println("< U >     Upgrade");
+        }
+
         System.out.print(" >>> ");
 
         String input;
@@ -152,11 +156,51 @@ public class Main {
                 transfer(bank);
             } else if (input.equalsIgnoreCase("D")) {
                 deposit(bank);
+            } else if (input.equalsIgnoreCase("U") && bank instanceof Custom) {
+                upgrade(bank);
             } else {
                 System.out.print("INVALID\n\n >>> ");
                 valid = false;
             }
         } while (!valid);
+    }
+
+    public static void upgrade(PiggyBank bank) {
+        if (cash < 20) {
+            System.out.println("You do not have enough cash to upgrade your piggy bank.");
+            return;
+        }
+
+        System.out.println("For $20, would you like to upgrade to (Enter anything to go back):");
+
+        if (!bank.canWithdraw) {
+            System.out.println("< W >     Withdraw function");
+        }
+
+        if (!bank.canInvest) {
+            System.out.println("< I >     Invest function");
+        }
+
+        if (!bank.canGainInterest) {
+            System.out.println("< G >     Gaining interest function");
+        }
+
+        System.out.print(" >>> ");
+
+        String[][] arr = {
+                {"W", "Withdraw"},
+                {"I", "Invest"},
+                {"G", "Interest"}
+        };
+
+        String input = scanner.nextLine();
+
+        for (int i = 0; i < 3; i++) {
+            if (input.equalsIgnoreCase(arr[i][0])) {
+                ((Custom) bank).upgradeAbility(arr[i][1]);
+                System.out.println("Successfully upgraded.");
+            }
+        }
     }
 
     public static void deposit(PiggyBank bank) {
