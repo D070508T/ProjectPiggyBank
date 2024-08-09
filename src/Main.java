@@ -170,12 +170,16 @@ public class Main {
             return;
         }
 
-        int[] newCoins = bank.changeCoins(Double.parseDouble(input), bank.newCoins(), true, true);
+        double amount = Double.parseDouble(input);
+
+        int[] newCoins = bank.changeCoins(amount, bank.newCoins(), true, true);
 
         if (newCoins[0] == -1) {
             System.out.println("Deposit failed.");
         } else {
+            System.out.println("Successful transaction");
             bank.setCoins(newCoins);
+            cash -= amount;
         }
     }
 
@@ -218,7 +222,10 @@ public class Main {
             System.out.print("INVALID\n\n >>> ");
         }
 
-        bank.addCoin(Integer.parseInt(c) - 1, Integer.parseInt(amount));
+        int coin = Integer.parseInt(c) - 1;
+
+        bank.addCoin(coin, Integer.parseInt(amount));
+        cash -= Double.parseDouble(amount) * PiggyBank.coinValues[coin];
     }
 
     public static void transfer(PiggyBank bank) {
