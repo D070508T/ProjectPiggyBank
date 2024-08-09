@@ -37,14 +37,20 @@ public class Main {
                     String input = scanner.nextLine();
 
                     switch (input) {
-                        case "1" -> displayBanks();
-                        case "2" -> catalogue();
+                        case "1" -> {
+                            displayBanks();
+                            valid = true;
+                        }
+                        case "2" -> {
+                            catalogue();
+                            valid = true;
+                        }
                         case "3" -> {
                             System.out.println("Goodbye.");
                             System.exit(0);
                         }
                         default -> {
-                            System.out.println("INVALID RESPONSE\n\n >>> ");
+                            System.out.print("INVALID RESPONSE\n\n >>> ");
                             valid = false;
                         }
                     }
@@ -259,38 +265,21 @@ public class Main {
     public static void withdraw(PiggyBank bank) {
         System.out.print("Enter an amount of money: ");
         String input;
-        boolean valid;
-        boolean isPeriod;
 
-        do {
+        while (true) {
             input = scanner.nextLine();
-            valid = true;
-            isPeriod = false;
 
-            for (int i = 0; i < input.length(); i++) {
-                char c = input.charAt(i);
-                if ((int) c < 49 || (int) c > 57) {
-                    if (c == '.') {
-                        if (isPeriod) {
-                            valid = false;
-                            i = input.length();
-                            System.out.print("INVALID\n\n >>> ");
-                        } else {
-                            isPeriod = true;
-                        }
-                    } else {
-                        valid = false;
-                        i = input.length();
-                        System.out.print("INVALID\n\n >>> ");
-                    }
-                }
+            if (!notDigit(input, false)) {
+                break;
             }
-        } while (!valid);
+
+            System.out.print("INVALID\n\n >>> ");
+        }
 
         double amount = Double.parseDouble(input);
 
         if (((Spending) bank).withdrawCoins(amount)) {
-            cash -= amount;
+            cash += amount;
         }
     }
 

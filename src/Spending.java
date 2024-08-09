@@ -1,5 +1,3 @@
-import java.util.Scanner;
-
 public class Spending extends PiggyBank {
     public Spending() {
         super();
@@ -19,6 +17,7 @@ public class Spending extends PiggyBank {
 
         if (c[0] != -1) {
             coins = c;
+            System.out.println("Withdrawal successful.");
             return true;
         } else {
             System.out.println("This withdrawal was not possible.");

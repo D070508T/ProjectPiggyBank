@@ -139,14 +139,14 @@ public class PiggyBank {
                     amountOfCoins += newCoins[j];
                 }
 
-                if ((int)(amount*100) > (int)(coinValues[i]*100)) {
+                if (amount > coinValues[i]) {
                     if (add && amountOfCoins < capacity) {
                         newCoins[i]++;
                     } else if (!add) {
                         newCoins[i]--;
                     }
                     return changeCoins((double)((int)(amount*100) - (int)(coinValues[i]*100))/100, newCoins(), add, returnSuccess);
-                } else if ((int)(amount*100) == (int)(coinValues[i]*100)) {
+                } else if (amount == coinValues[i]) {
                     if (add && amountOfCoins < capacity) {
                         newCoins[i]++;
                     } else if (!add) {
