@@ -131,7 +131,7 @@ public class Main {
             } else if (input.equalsIgnoreCase("T")) {
                 transfer(bank);
             } else if (input.equalsIgnoreCase("D")) {
-                deposit();
+                deposit(bank);
             } else {
                 System.out.print("INVALID\n\n >>> ");
                 valid = false;
@@ -139,7 +139,7 @@ public class Main {
         } while (!valid);
     }
 
-    public static void deposit() {
+    public static void deposit(PiggyBank bank) {
         System.out.print("""
                         Would you rather add coins (enter anything else to go back):
                         
@@ -155,12 +155,70 @@ public class Main {
         }
 
         if (choice.equalsIgnoreCase("1")) {
-
+            depositAmount(bank);
         } else if (choice.equalsIgnoreCase("2")) {
+            depositCoin(bank);
+        }
+    }
 
-        } else {
+    public static void depositAmount(PiggyBank bank) {
+        System.out.print("Enter amount (enter anything else to go back): ");
+
+        String input = scanner.nextLine();
+
+        if (notDigit(input)) {
             return;
         }
+
+        int[] newCoins = bank.changeCoins(Double.parseDouble(input), bank.newCoins(), true, true);
+
+        if (newCoins[0] == -1) {
+            System.out.println("Deposit failed.");
+        } else {
+            bank.setCoins(newCoins);
+        }
+    }
+
+    public static void depositCoin(PiggyBank bank) {
+        System.out.print("""
+                    Choose a type of coin (Enter anything else to go back):
+                    <1>   Nickel
+                    <2>   Dime
+                    <3>   Quarter
+                    <4>   Loonie
+                    <5>   Toonie
+                    
+                     >>>\s""");
+
+        String c = scanner.nextLine();
+
+        if (c.length() != 1 || notDigit(c)) {
+            return;
+        }
+
+        int n = c.charAt(0);
+
+        if (n < 49 || n > 53) {
+            return;
+        }
+
+        int space = bank.spaceLeft();
+
+        System.out.print("Enter an amount (you have " + space + " space left): ");
+
+        String amount;
+
+        while (true) {
+            amount = scanner.nextLine();
+
+            if (!notDigit(amount) && Integer.parseInt(amount) <= space) {
+                break;
+            }
+
+            System.out.print("INVALID\n\n >>> ");
+        }
+
+        bank.addCoin(Integer.parseInt(c) - 1, Integer.parseInt(amount));
     }
 
     public static void transfer(PiggyBank bank) {
