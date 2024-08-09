@@ -3,7 +3,6 @@ public class Custom extends PiggyBank{
     public Custom(String _name, int _capacity, boolean _canWithdraw, boolean _canGainInterest, boolean _canInvest) {
         super();
         name = _name;
-        coins = new int[5];
         canGainInterest = _canGainInterest;
         canWithdraw = _canWithdraw;
         canInvest = _canInvest;
