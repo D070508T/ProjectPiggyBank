@@ -3,6 +3,8 @@ PIGGY BANK PROJECT
 David Tarandach Tabatschnic
 */
 
+import java.util.Random;
+
 public class PiggyBank {
     //Instance variables
     protected int cost;
@@ -159,6 +161,44 @@ public class PiggyBank {
 
         // Return an array indicating no valid combinations found
         return new int[]{-1, -1, -1, -1, -1};
+    }
+
+    //pre: doesn't take in anything
+    //post: doesn't return anything
+    //This method allows the piggy bank to invest 30% of their money for a 50/50 chance of profit
+    public void invest() {
+        Random random = new Random();
+
+        int randInt = random.nextInt(1, 3);
+
+        if (randInt == 1) {
+            coins = changeCoins(0.5 * getMoney(), newCoins(), true, false);
+        } else {
+            changeCoins(0.5 * getMoney(), newCoins(), false, false);
+        }
+    }
+
+    //pre: takes in a double, percent
+    //post: doesn't return anything
+    //This method allows the piggy bank to gain interest
+    public void collectInterest() {
+        coins = changeCoins(0.03*getMoney(), newCoins(), true, false);
+    }
+
+    //pre: takes in a double and an int
+    //post: returns a boolean to check if the transaction was successful
+    //returns the new combination of coins after using the needed ones to fulfil the amount of money (all values are -1 if there are no possible combos)
+    public boolean withdrawCoins(double amount) {
+        int[] c = changeCoins(amount, newCoins(), false, true);
+
+        if (c[0] != -1) {
+            coins = c;
+            System.out.println("Withdrawal successful.");
+            return true;
+        } else {
+            System.out.println("This withdrawal was not possible.");
+            return false;
+        }
     }
 
 

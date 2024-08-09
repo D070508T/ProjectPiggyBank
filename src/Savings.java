@@ -8,11 +8,4 @@ public class Savings extends PiggyBank {
         canInvest = false;
         name = "Savings Bank";
     }
-
-    //pre: takes in a double, percent
-    //post: doesn't return anything
-    //This method allows the piggy bank to gain interest
-    public void collectInterest() {
-        coins = changeCoins(0.03*getMoney(), newCoins(), true, false);
-    }
 }

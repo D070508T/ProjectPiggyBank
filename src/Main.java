@@ -149,9 +149,9 @@ public class Main {
             if (input.equalsIgnoreCase("W") && bank.canWithdraw) {
                 withdraw(bank);
             } else if (input.equalsIgnoreCase("G") && bank.canGainInterest) {
-                ((Savings) bank).collectInterest();
+                bank.collectInterest();
             } else if (input.equalsIgnoreCase("I") && bank.canInvest) {
-                ((Investing) bank).invest();
+                bank.invest();
             } else if (input.equalsIgnoreCase("T")) {
                 transfer(bank);
             } else if (input.equalsIgnoreCase("D")) {
