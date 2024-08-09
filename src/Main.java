@@ -146,11 +146,11 @@ public class Main {
         do {
             input = scanner.nextLine();
 
-            if (input.equalsIgnoreCase("W") && bank.canWithdraw) {
+            if (input.equalsIgnoreCase("W") && bank.canWithdraw()) {
                 withdraw(bank);
-            } else if (input.equalsIgnoreCase("G") && bank.canGainInterest) {
+            } else if (input.equalsIgnoreCase("G") && bank.canGainInterest()) {
                 bank.collectInterest();
-            } else if (input.equalsIgnoreCase("I") && bank.canInvest) {
+            } else if (input.equalsIgnoreCase("I") && bank.canInvest()) {
                 bank.invest();
             } else if (input.equalsIgnoreCase("T")) {
                 transfer(bank);
@@ -173,15 +173,15 @@ public class Main {
 
         System.out.println("For $20, would you like to upgrade to (Enter anything to go back):");
 
-        if (!bank.canWithdraw) {
+        if (!bank.canWithdraw()) {
             System.out.println("< W >     Withdraw function");
         }
 
-        if (!bank.canInvest) {
+        if (!bank.canInvest()) {
             System.out.println("< I >     Invest function");
         }
 
-        if (!bank.canGainInterest) {
+        if (!bank.canGainInterest()) {
             System.out.println("< G >     Gaining interest function");
         }
 

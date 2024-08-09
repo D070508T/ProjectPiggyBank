@@ -49,11 +49,7 @@ public class PiggyBank {
         }
     }
 
-    // Getters and setters
-    public int getCost() {
-        return cost;
-    }
-
+    //Accessors and modifiers
     public int amountOfCoins() {
         int c = 0;
         for (int coin : coins) {
@@ -63,20 +59,12 @@ public class PiggyBank {
         return c;
     }
 
-    public void setCost(int Cost) {
-        cost = Cost;
+    public int getCost() {
+        return cost;
     }
 
     public int getSellCost() {
         return (int) (0.8 * cost);
-    }
-
-    public void setCapacity(int _capacity) {
-        capacity = _capacity;
-    }
-
-    public int getCapacity() {
-        return capacity;
     }
 
     public double getMoney() {
@@ -89,16 +77,8 @@ public class PiggyBank {
         return money;
     }
 
-    public int[] getCoins() {
-        return coins;
-    }
-
     public void setCoins(int[] newCoins) {
         coins = newCoins;
-    }
-
-    public void setName(String Name) {
-        name = Name;
     }
 
     public String getName() {
