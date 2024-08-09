@@ -324,7 +324,7 @@ public class Main {
 
         double amount = Double.parseDouble(input);
 
-        if (((Spending) bank).withdrawCoins(amount)) {
+        if (bank.withdrawCoins(amount)) {
             cash += amount;
         }
     }
@@ -399,15 +399,15 @@ public class Main {
 
             switch (userInput) {
                 case "1": {
-                    bank = new Spending();
+                    bank = new PiggyBank("Spending");
                     break;
                 }
                 case "2": {
-                    bank = new Savings();
+                    bank = new PiggyBank("Savings");
                     break;
                 }
                 case "3": {
-                    bank = new Investing();
+                    bank = new PiggyBank("Investing");
                     break;
                 }
                 case "4": {

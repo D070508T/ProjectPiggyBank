@@ -24,6 +24,31 @@ public class PiggyBank {
         coins = new int[5];
     }
 
+    public PiggyBank(String tag) {
+        if (tag.equalsIgnoreCase("Spending")) {
+            cost = 50;
+            capacity = 30;
+            canGainInterest = false;
+            canWithdraw = true;
+            canInvest = false;
+            name = "Spending Bank";
+        } else if (tag.equalsIgnoreCase("Savings")) {
+            cost = 200;
+            capacity = 100;
+            canGainInterest = true;
+            canWithdraw = false;
+            canInvest = false;
+            name = "Savings Bank";
+        } else {
+            cost = 70;
+            capacity = 55;
+            canGainInterest = false;
+            canWithdraw = false;
+            canInvest = true;
+            name = "Investing Bank";
+        }
+    }
+
     // Getters and setters
     public int getCost() {
         return cost;
