@@ -134,6 +134,8 @@ public class Main {
             System.out.println("< I >     Invest");
         }
 
+        System.out.print(" >>> ");
+
         String input;
         boolean valid = true;
 
